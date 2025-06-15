@@ -26,9 +26,7 @@ class VoteListScreen extends StatelessWidget {
       drawer: const CustomDrawer(),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.votes.isEmpty) {
@@ -43,7 +41,7 @@ class VoteListScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'no_votes_found'.tr,
+                  'no_courses_found'.tr,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -51,10 +49,8 @@ class VoteListScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'no_votes_subtitle'.tr,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                  ),
+                  'no_courses_subtitle'.tr,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
@@ -74,16 +70,10 @@ class VoteListScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           itemCount: controller.votes.length,
           itemBuilder: (context, index) {
-            final vote = controller.votes[index];
-
-            final studentName = vote.student != null
-                ? vote.student!['name'] as String
-                : '${'student'.tr}: ${vote.studentId}';
-
-            final courseCount = vote.courseId;
+            final courseVote = controller.votes[index];
 
             return Directionality(
-              textDirection: TextDirection.rtl, // لضبط اتجاه النصوص للعربية
+              textDirection: TextDirection.rtl,
               child: Card(
                 elevation: 2,
                 margin: const EdgeInsets.only(bottom: 16),
@@ -92,7 +82,7 @@ class VoteListScreen extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    controller.setSelectedVote(vote);
+                    controller.setSelectedVote(courseVote);
                     Get.toNamed(Routes.VOTE_DETAIL);
                   },
                   borderRadius: BorderRadius.circular(12),
@@ -103,14 +93,13 @@ class VoteListScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            // Student avatar
                             CircleAvatar(
                               radius: 24,
                               backgroundColor: AppColors.primary,
                               child: Text(
-                                studentName.isNotEmpty
-                                    ? studentName[0].toUpperCase()
-                                    : 'S',
+                                courseVote.courseName.isNotEmpty
+                                    ? courseVote.courseName[0].toUpperCase()
+                                    : 'C',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -124,7 +113,7 @@ class VoteListScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    studentName,
+                                    courseVote.courseName,
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -132,9 +121,7 @@ class VoteListScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'voted_for_courses'.trParams(
-                                      {'count': courseCount.toString()},
-                                    ),
+                                    courseVote.courseCode,
                                     style: TextStyle(
                                       color: AppColors.textSecondary,
                                     ),
@@ -150,12 +137,10 @@ class VoteListScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: AppColors.secondary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: AppColors.secondary,
-                                ),
+                                border: Border.all(color: AppColors.secondary),
                               ),
                               child: Text(
-                                '$courseCount ${'courses'.tr}',
+                                '${courseVote.voteCount} ${'votes'.tr}',
                                 style: TextStyle(
                                   color: AppColors.secondary,
                                   fontWeight: FontWeight.bold,
@@ -168,26 +153,13 @@ class VoteListScreen extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
-                              Icons.calendar_today,
+                              Icons.school,
                               size: 16,
                               color: AppColors.textSecondary,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${'created'.tr}: ${_formatDate(vote.createdAt)}',
-                              style: TextStyle(
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Icon(
-                              Icons.update,
-                              size: 16,
-                              color: AppColors.textSecondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${'updated'.tr}: ${_formatDate(vote.updatedAt)}',
+                              'graduating_voters'.tr + "${courseVote.graduatingVotersCount.toString()}",
                               style: TextStyle(
                                 color: AppColors.textSecondary,
                               ),
@@ -199,9 +171,9 @@ class VoteListScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: TextButton.icon(
                             icon: const Icon(Icons.visibility),
-                            label: Text('view_details'.tr),
+                            label: Text('view_voters'.tr),
                             onPressed: () {
-                              controller.setSelectedVote(vote);
+                              controller.setSelectedVote(courseVote);
                               Get.toNamed(Routes.VOTE_DETAIL);
                             },
                           ),
@@ -217,21 +189,4 @@ class VoteListScreen extends StatelessWidget {
       }),
     );
   }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = now.difference(date);
-
-    if (difference.inDays < 1) {
-      if (difference.inHours < 1) {
-        return '${difference.inMinutes} minutes ago';
-      }
-      return '${difference.inHours} hours ago';
-    } else if (difference.inDays < 30) {
-      return '${difference.inDays} days ago';
-    } else {
-      return '${date.day}/${date.month}/${date.year}';
-    }
-  }
 }
-

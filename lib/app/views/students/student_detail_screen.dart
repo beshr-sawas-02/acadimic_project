@@ -153,6 +153,7 @@ class StudentDetailScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Academic info
+              if(!isAdmin)
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(

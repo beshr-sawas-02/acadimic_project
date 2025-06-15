@@ -4,6 +4,14 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en': {
+          'course_voters': 'Course Voters',
+          'no_courses_found': 'No courses found', // Already exists, included for context
+          'no_courses_subtitle': 'No courses have been voted on yet',
+          'graduating_voters': 'Graduating Voters:',
+          'voters_list': 'Voters List',
+          'no_voters_found': 'No voters found',
+          'view_voters': 'View Voters',
+          'graduating': 'Graduating',
           'home': 'Home',
           'quick_access': 'Quick Access',
           'courses': 'Courses',
@@ -361,6 +369,14 @@ class AppTranslations extends Translations {
           'start_by_adding': 'ابدأ بإضافة موظف جديد',
           'add_employee': 'إضافة موظف',
           'dob': 'تاريخ الميلاد',
+          'course_voters': 'المصوتون للمقرر',
+          'no_courses_found': 'لا توجد مقررات', // Already exists, included for context
+          'no_courses_subtitle': 'لم يتم التصويت على أي مقررات حتى الآن',
+          'graduating_voters': 'الطلاب المتخرجون: ',
+          'voters_list': 'قائمة المصوتين',
+          'no_voters_found': 'لم يتم العثور على مصوتين',
+          'view_voters': 'عرض المصوتين',
+          'graduating': 'متخرج',
           'employee_details': 'تفاصيل الموظف',
           'no_employee_selected': 'لم يتم اختيار موظف',
           'employee_information': 'معلومات الموظف',

@@ -147,6 +147,21 @@ class EmployeeDetailScreen extends StatelessWidget {
                         title: 'role'.tr,
                         value: employee.role.toString().toUpperCase(),
                       ),
+                      const SizedBox(height: 12),
+                      _buildDetailRow(
+                        icon: Icons.business,
+                        title: 'isActive'.tr,
+                        value: (employee.isActive ?? true) ? "Active" : "not Active",
+                      ),
+
+                      if(employee.endDate!=null)...[
+                        const SizedBox(height: 12),
+                        _buildDetailRow(
+                          icon: Icons.business,
+                          title: 'endDate'.tr,
+                          value: employee.endDate.toString(),
+                        ),
+                      ]
                     ],
                   ),
                 ),
@@ -184,6 +199,7 @@ class EmployeeDetailScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 16),
+                          if((employee.isActive ?? true))
                           Expanded(
                             child: CustomButton(
                               text: 'delete_employee'.tr,

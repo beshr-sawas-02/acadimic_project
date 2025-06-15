@@ -8,34 +8,21 @@ class VoteRepository {
   final ApiProvider _apiProvider = Get.find<ApiProvider>();
 
   // Get all votes
-  Future<List<Vote>> getAllVotes() async {
+  Future<List<CourseVote>> getAllVotes() async {
     try {
-      final response = await _apiProvider.get(
-        ApiConstants.getAllVotes,
-      );
-
-      // return (response.data as List)
-      //     .map((vote) => Vote.fromMap(vote))
-      //     .toList();
-
+      final response = await _apiProvider.get(ApiConstants.getAllVotes);
+      print(response.data);
       return (response.data as List)
-          .map((vote) => Vote.fromMap(vote))
+          .map((vote) => CourseVote.fromMap(vote))
           .toList();
-
     } on DioException catch (e) {
       print('DioException in getAllVotes: ${e.response?.data ?? e.message}');
-      if (e.response != null) {
-        throw e.response!.data['message'] ?? 'Failed to get votes';
-      } else {
-        throw e.message ?? 'Failed to get votes';
-      }
+      throw e.response?.data['message'] ?? 'Failed to get votes';
     } catch (e) {
       print('Other Exception in getAllVotes: $e');
-
       throw e.toString();
     }
   }
-
   // Get vote by ID
   Future<Vote> getVoteById(String id) async {
     try {

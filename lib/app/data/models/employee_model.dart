@@ -7,18 +7,20 @@ class Employee {
   final String email;
   final String dob;
   final Role role;
-
+  final bool? isActive;
+  final String? endDate;
   Employee({
     required this.id,
     required this.name,
     required this.email,
     required this.dob,
     this.role = Role.EMP,
+    this.isActive=true,
+    this.endDate
   });
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
       'name': name,
       'email': email,
       'dob': dob,
@@ -33,6 +35,8 @@ class Employee {
       email: map['email'] ?? '',
       dob: map['dob'] ?? '',
       role: Role.fromString(map['role'] ?? 'emp'),
+      endDate: map['endDate'],
+      isActive: map["isActive"] ?? true
     );
   }
 

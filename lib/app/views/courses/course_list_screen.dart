@@ -383,7 +383,7 @@ class CourseListScreen extends StatelessWidget {
       ),
       floatingActionButton: isAdmin
           ? FloatingActionButton(
-        backgroundColor: AppColors.secondary,
+        backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
         tooltip: 'add_course'.tr,
         onPressed: () {

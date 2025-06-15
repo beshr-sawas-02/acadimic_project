@@ -16,6 +16,7 @@ class StudentListScreen extends StatelessWidget {
     final authController = Get.find<AuthController>();
     final isAdmin = authController.isAdmin;
 
+
     return Scaffold(
       appBar: AppBar(
         title: Text('students_title'.tr),
