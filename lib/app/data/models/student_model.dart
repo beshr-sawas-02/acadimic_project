@@ -31,7 +31,7 @@ class Student {
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
       major: map['major'] ?? '',
-      year: YearEnum.fromInt(map['year'] ?? 1),
+      year: YearEnum.fromInt(map['academicStatus'] ?? 1),
       universityId: map['universityId']?.toInt() ?? 0,
     );
   }

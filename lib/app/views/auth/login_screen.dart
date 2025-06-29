@@ -8,20 +8,13 @@ import '../../../widgets/custom_text_field.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  void _login(AuthController controller, String role) {
-    if (role == 'admin') {
-      controller.loginAsAdmin();
-    } else if (role == 'employee') {
-      controller.loginAsEmployee();
-    }
+  void _login(AuthController controller) {
+    controller.login();
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-
-    // متغير لتخزين الدور المختار (افتراضياً admin)
-    final RxString selectedRole = 'admin'.obs;
 
     return Scaffold(
       body: Obx(() {
@@ -91,50 +84,10 @@ class LoginScreen extends StatelessWidget {
                               isPassword: true,
                             ),
                             const SizedBox(height: 32),
-
-                            // اختيار الدور مع إبراز الدور المحدد
-                            Obx(() => Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('login_as'.tr + ': '),
-                                TextButton(
-                                  onPressed: () => selectedRole.value = 'admin',
-                                  child: Text(
-                                    'admin'.tr,
-                                    style: TextStyle(
-                                      color: selectedRole.value == 'admin'
-                                          ? AppColors.primary
-                                          : null,
-                                      fontWeight: selectedRole.value == 'admin'
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () => selectedRole.value = 'employee',
-                                  child: Text(
-                                    'employee'.tr,
-                                    style: TextStyle(
-                                      color: selectedRole.value == 'employee'
-                                          ? AppColors.primary
-                                          : null,
-                                      fontWeight: selectedRole.value == 'employee'
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-
-                            const SizedBox(height: 16),
-
-                            // زر تسجيل الدخول
                             CustomButton(
                               text: 'login'.tr,
                               onPressed: () {
-                                _login(controller, selectedRole.value);
+                                _login(controller);
                               },
                               backgroundColor: AppColors.secondary,
                             ),

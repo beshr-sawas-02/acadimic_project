@@ -10,7 +10,20 @@ class AuthRepository {
   final ApiProvider _apiProvider = Get.find<ApiProvider>();
   final StorageProvider _storageProvider = Get.find<StorageProvider>();
 
-  // Login employee
+  // ✅ دالة تسجيل دخول موحدة
+  Future<User> login(LoginRequest loginRequest) async {
+    try {
+      // محاولة كـ Admin
+      return await loginAdmin(LoginAdminRequest(
+        email: loginRequest.email,
+        password: loginRequest.password,
+      ));
+    } catch (_) {
+      // إذا فشل، جرب كـ Employee
+      return await loginEmployee(loginRequest);
+    }
+  }
+
   Future<User> loginEmployee(LoginRequest loginRequest) async {
     try {
       final response = await _apiProvider.post(
@@ -20,7 +33,6 @@ class AuthRepository {
 
       final loginResponse = LoginResponse.fromMap(response.data);
 
-      // Save token and user data
       await _storageProvider.setToken(loginResponse.accessToken);
       await _storageProvider.setUser(loginResponse.user);
       await _storageProvider.setRole(loginResponse.user['role']);
@@ -37,7 +49,6 @@ class AuthRepository {
     }
   }
 
-  // Login admin
   Future<User> loginAdmin(LoginAdminRequest loginRequest) async {
     try {
       final response = await _apiProvider.post(
@@ -45,10 +56,8 @@ class AuthRepository {
         data: loginRequest.toMap(),
       );
 
-
       final loginResponse = LoginResponse.fromMap(response.data);
 
-      // Save token and user data
       await _storageProvider.setToken(loginResponse.accessToken);
       await _storageProvider.setUser(loginResponse.user);
       await _storageProvider.setRole(loginResponse.user['role']);
@@ -65,15 +74,11 @@ class AuthRepository {
     }
   }
 
-  // Logout
   Future<void> logout() async {
     await _storageProvider.clearAll();
   }
 
-  // Check if user is logged in
   bool get isLoggedIn => _storageProvider.isLoggedIn;
-
-  // Get user data
   User? getUserData() {
     final userData = _storageProvider.user;
     if (userData != null) {
@@ -82,14 +87,7 @@ class AuthRepository {
     return null;
   }
 
-  // Get user role
-  String? getUserRole() {
-    return _storageProvider.role;
-  }
-
-  // Check if user is admin
+  String? getUserRole() => _storageProvider.role;
   bool get isAdmin => _storageProvider.isAdmin;
-
-  // Check if user is employee
   bool get isEmployee => _storageProvider.isEmployee;
 }

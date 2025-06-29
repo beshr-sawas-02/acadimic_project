@@ -38,8 +38,8 @@ class StudentController extends GetxController {
       students.assignAll(result);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to fetch students: ${e.toString()}',
+        title: 'error'.tr,
+        message: 'failed_fetch_students'.tr + e.toString(),
       );
     } finally {
       isLoading.value = false;
@@ -54,8 +54,8 @@ class StudentController extends GetxController {
       selectedStudent.value = result;
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to get student: ${e.toString()}',
+        title: 'error'.tr,
+        message: 'failed_get_student'.tr + e.toString(),
       );
     } finally {
       isLoading.value = false;
@@ -75,8 +75,8 @@ class StudentController extends GetxController {
       students.assignAll(result);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to search students: ${e.toString()}',
+        title: 'error'.tr,
+        message: 'failed_search_students'.tr + e.toString(),
       );
     } finally {
       isLoading.value = false;
@@ -95,8 +95,8 @@ class StudentController extends GetxController {
       gpaResponse.value = result;
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to get semester GPA: ${e.toString()}',
+        title: 'error'.tr,
+        message: 'failed_get_semester_gpa'.tr + e.toString(),
       );
     } finally {
       isLoading.value = false;
@@ -111,8 +111,8 @@ class StudentController extends GetxController {
       gpaResponse.value = result;
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to get cumulative GPA: ${e.toString()}',
+        title: 'error'.tr,
+        message: 'failed_get_cumulative_gpa'.tr + e.toString(),
       );
     } finally {
       isLoading.value = false;
@@ -138,17 +138,17 @@ class StudentController extends GetxController {
   // Delete student
   Future<void> deleteStudent(String id) async {
     DialogHelper.showConfirmDialog(
-      title: 'Delete Student',
-      message: 'Are you sure you want to delete this student? This action cannot be undone.',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
+      title: 'delete_student'.tr,
+      message: 'delete_confirmation_message'.tr,
+      confirmText: 'delete'.tr,
+      cancelText: 'cancel'.tr,
       onConfirm: () async {
         try {
           isLoading.value = true;
           await _studentRepository.deleteStudent(id);
 
           DialogHelper.showSuccessSnackbar(
-            title: 'Success',
+            title: 'success'.tr,
             message: AppConstants.deleteSuccess,
           );
 
@@ -162,8 +162,8 @@ class StudentController extends GetxController {
           }
         } catch (e) {
           DialogHelper.showErrorSnackbar(
-            title: 'Error',
-            message: 'Failed to delete student: ${e.toString()}',
+            title: 'error'.tr,
+            message: 'failed_to_delete_student'.tr + e.toString(),
           );
         } finally {
           isLoading.value = false;

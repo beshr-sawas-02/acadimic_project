@@ -20,21 +20,14 @@ class CustomDrawer extends StatelessWidget {
           children: [
             // Drawer header with user info
             UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: AppColors.secondary,
-              ),
+              decoration: BoxDecoration(color: AppColors.secondary),
               accountName: Text(
                 user?.name ?? 'User',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               accountEmail: Text(
                 user?.email ?? '',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyle(fontSize: 14),
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: AppColors.primary,
@@ -57,7 +50,10 @@ class CustomDrawer extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: Icon(Icons.dashboard, color: AppColors.secondary),
+                      leading: Icon(
+                        Icons.dashboard,
+                        color: AppColors.secondary,
+                      ),
                       title: Text('home'.tr),
                       onTap: () {
                         Get.back();
@@ -67,7 +63,10 @@ class CustomDrawer extends StatelessWidget {
                     const Divider(),
 
                     ListTile(
-                      leading: Icon(Icons.menu_book, color: AppColors.secondary),
+                      leading: Icon(
+                        Icons.menu_book,
+                        color: AppColors.secondary,
+                      ),
                       title: Text('courses'.tr),
                       onTap: () {
                         Get.back();
@@ -77,7 +76,10 @@ class CustomDrawer extends StatelessWidget {
 
                     if (isAdmin)
                       ListTile(
-                        leading: Icon(Icons.add_circle_outline, color: AppColors.secondary),
+                        leading: Icon(
+                          Icons.add_circle_outline,
+                          color: AppColors.secondary,
+                        ),
                         title: Text('add_new_course'.tr),
                         onTap: () {
                           Get.back();
@@ -97,39 +99,48 @@ class CustomDrawer extends StatelessWidget {
                     ),
 
                     const Divider(),
-
-                    ListTile(
-                      leading: Icon(Icons.grade, color: AppColors.secondary),
-                      title: Text('marks'.tr),
-                      onTap: () {
-                        Get.back();
-                        Get.toNamed(Routes.MARKS);
-                      },
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.upload_file, color: AppColors.secondary),
-                      title: Text('bulk_import_marks'.tr),
-                      onTap: () {
-                        Get.back();
-                        Get.toNamed(Routes.BULK_IMPORT_MARKS);
-                      },
-                    ),
+                    if (!isAdmin)
+                      ListTile(
+                        leading: Icon(Icons.grade, color: AppColors.secondary),
+                        title: Text('marks'.tr),
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.MARKS);
+                        },
+                      ),
+                    if (!isAdmin)
+                      ListTile(
+                        leading: Icon(
+                          Icons.upload_file,
+                          color: AppColors.secondary,
+                        ),
+                        title: Text('bulk_import_marks'.tr),
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.BULK_IMPORT_MARKS);
+                        },
+                      ),
 
                     const Divider(),
-
-                    ListTile(
-                      leading: Icon(Icons.how_to_vote, color: AppColors.secondary),
-                      title: Text('voting'.tr),
-                      onTap: () {
-                        Get.back();
-                        Get.toNamed(Routes.VOTES);
-                      },
-                    ),
+                    if (isAdmin)
+                      ListTile(
+                        leading: Icon(
+                          Icons.how_to_vote,
+                          color: AppColors.secondary,
+                        ),
+                        title: Text('voting'.tr),
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.VOTES);
+                        },
+                      ),
 
                     if (isAdmin)
                       ListTile(
-                        leading: Icon(Icons.settings, color: AppColors.secondary),
+                        leading: Icon(
+                          Icons.settings,
+                          color: AppColors.secondary,
+                        ),
                         title: Text('voting_management'.tr),
                         onTap: () {
                           Get.back();
@@ -140,7 +151,10 @@ class CustomDrawer extends StatelessWidget {
                     if (isAdmin) ...[
                       const Divider(),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         child: Text(
                           'administration'.tr,
                           style: TextStyle(
@@ -159,7 +173,10 @@ class CustomDrawer extends StatelessWidget {
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.person_add, color: AppColors.secondary),
+                        leading: Icon(
+                          Icons.person_add,
+                          color: AppColors.secondary,
+                        ),
                         title: Text('add_new_employee'.tr),
                         onTap: () {
                           Get.back();
@@ -177,9 +194,7 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.logout, color: AppColors.error),
               title: Text(
                 'logout'.tr,
-                style: TextStyle(
-                  color: AppColors.error,
-                ),
+                style: TextStyle(color: AppColors.error),
               ),
               onTap: authController.logout,
             ),

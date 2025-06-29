@@ -143,7 +143,7 @@ class StudentDetailScreen extends StatelessWidget {
                       _buildDetailRow(
                         icon: Icons.calendar_today,
                         title: 'year'.tr,
-                        value: '${'year'.tr} ${student.year.value}',
+                        value: '${'year'.tr} ${student.year.value >=5 ? 5 : student.year.value}',
                       ),
                     ],
                   ),
@@ -195,16 +195,16 @@ class StudentDetailScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      CustomButton(
-                        text: 'view_registered_courses'.tr,
-                        onPressed: () => Get.toNamed(
-                          Routes.COURSES,
-                          arguments: {'studentId': student.id},
-                        ),
-                        backgroundColor: Colors.blue,
-                        icon: Icons.menu_book,
-                        width: double.infinity,
-                      ),
+                      // CustomButton(
+                      //   text: 'view_registered_courses'.tr,
+                      //   onPressed: () => Get.toNamed(
+                      //     Routes.COURSES,
+                      //     arguments: {'studentId': student.id},
+                      //   ),
+                      //   backgroundColor: Colors.blue,
+                      //   icon: Icons.menu_book,
+                      //   width: double.infinity,
+                      // ),
                     ],
                   ),
                 ),

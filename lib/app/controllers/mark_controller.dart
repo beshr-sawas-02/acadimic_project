@@ -33,18 +33,7 @@ class MarkController extends GetxController {
     super.onInit();
     fetchAllMarks();
 
-    // Sync Rx values with TextEditingControllers
-    ever(mark, (_) {
-      final text = mark.value.toString();
-      if (markController.text != text) {
-        markController.text = text;
-        // وضع المؤشر في آخر النص
-        markController.selection = TextSelection.fromPosition(
-          TextPosition(offset: markController.text.length),
-        );
-      }
-    });
-
+    // Sync type with TextEditingController only
     ever(type, (_) {
       if (typeController.text != type.value) {
         typeController.text = type.value;
@@ -55,14 +44,12 @@ class MarkController extends GetxController {
     });
   }
 
-  // Fetch all marks
   Future<void> fetchAllMarks() async {
     try {
       isLoading.value = true;
       final result = await _markRepository.getAllMarks();
       marks.assignAll(result);
     } catch (e) {
-      print(e);
       DialogHelper.showErrorSnackbar(
         title: 'Error',
         message: 'Failed to fetch marks: ${e.toString()}',
@@ -72,14 +59,12 @@ class MarkController extends GetxController {
     }
   }
 
-  // Get mark by id
   Future<void> getMarkById(String id) async {
     try {
       isLoading.value = true;
       final result = await _markRepository.getMarkById(id);
       selectedMark.value = result;
 
-      // Set form values
       courseId.value = result.courseId;
       studentId.value = result.studentId;
       mark.value = result.mark;
@@ -95,7 +80,6 @@ class MarkController extends GetxController {
     }
   }
 
-  // Update mark
   Future<void> updateMark() async {
     if (selectedMark.value == null) {
       DialogHelper.showErrorSnackbar(
@@ -108,8 +92,11 @@ class MarkController extends GetxController {
     try {
       isLoading.value = true;
 
+      final parsedMark = double.tryParse(markController.text) ?? 0.0;
+      mark.value = parsedMark;
+
       final updateRequest = UpdateMarkRequest(
-        mark: mark.value != selectedMark.value!.mark ? mark.value : null,
+        mark: parsedMark != selectedMark.value!.mark ? parsedMark : null,
         type: type.value != selectedMark.value!.type ? type.value : null,
         status: status.value != selectedMark.value!.status ? status.value : null,
       );
@@ -121,10 +108,7 @@ class MarkController extends GetxController {
         message: AppConstants.updateSuccess,
       );
 
-      // Refresh marks
       fetchAllMarks();
-
-      // Go back
       Get.back();
     } catch (e) {
       DialogHelper.showErrorSnackbar(
@@ -136,7 +120,6 @@ class MarkController extends GetxController {
     }
   }
 
-  // Delete mark
   Future<void> deleteMark(String id) async {
     DialogHelper.showConfirmDialog(
       title: 'Delete Mark',
@@ -153,10 +136,8 @@ class MarkController extends GetxController {
             message: AppConstants.deleteSuccess,
           );
 
-          // Refresh marks
           fetchAllMarks();
 
-          // Go back if viewing details
           if (selectedMark.value != null && selectedMark.value!.id == id) {
             selectedMark.value = null;
             Get.back();
@@ -173,7 +154,6 @@ class MarkController extends GetxController {
     );
   }
 
-  // Create bulk import request
   BulkImportMarkRequest createBulkImportRequest({
     required String courseId,
     required String studentId,
@@ -188,9 +168,11 @@ class MarkController extends GetxController {
     );
   }
 
-  // Add mark to bulk import list
   void addMarkToBulkImport() {
-    if (courseId.value.isEmpty || studentId.value.isEmpty || mark.value <= 0 || type.value.isEmpty) {
+    final parsedMark = double.tryParse(markController.text) ?? 0.0;
+    mark.value = parsedMark;
+
+    if (courseId.value.isEmpty || studentId.value.isEmpty || parsedMark <= 0 || type.value.isEmpty) {
       DialogHelper.showErrorSnackbar(
         title: 'Error',
         message: 'Please fill all required fields',
@@ -201,17 +183,18 @@ class MarkController extends GetxController {
     final bulkMark = BulkImportMarkRequest(
       courseId: courseId.value,
       studentId: studentId.value,
-      mark: mark.value,
+      mark: parsedMark,
       type: type.value,
     );
 
     bulkMarks.add(bulkMark);
 
-    // Reset form
     courseId.value = '';
     studentId.value = '';
     mark.value = 0.0;
+    markController.clear();
     type.value = '';
+    typeController.clear();
 
     DialogHelper.showSuccessSnackbar(
       title: 'Success',
@@ -221,12 +204,10 @@ class MarkController extends GetxController {
     Get.back();
   }
 
-  // Remove mark from bulk import list
   void removeMarkFromBulkImport(int index) {
     bulkMarks.removeAt(index);
   }
 
-  // Submit bulk import
   Future<void> submitBulkImport() async {
     if (bulkMarks.isEmpty) {
       DialogHelper.showErrorSnackbar(
@@ -245,13 +226,8 @@ class MarkController extends GetxController {
         message: 'Marks imported successfully',
       );
 
-      // Clear bulk import list
       bulkMarks.clear();
-
-      // Refresh marks
       fetchAllMarks();
-
-      // Go back
       Get.toNamed(Routes.MARKS);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
@@ -263,16 +239,16 @@ class MarkController extends GetxController {
     }
   }
 
-  // Reset form
   void resetForm() {
     courseId.value = '';
     studentId.value = '';
     mark.value = 0.0;
+    markController.clear();
     type.value = '';
+    typeController.clear();
     status.value = MarkStatus.NORMAL;
   }
 
-  // Set selected mark for editing
   void setSelectedMark(Mark mark) {
     selectedMark.value = mark;
 

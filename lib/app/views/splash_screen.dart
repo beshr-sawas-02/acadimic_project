@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.tertiary.withOpacity(0.2),
+                            color: AppColors.tertiary..withAlpha((0.2 * 255).round()),
                             blurRadius: 20,
                             spreadRadius: 5,
                           ),
@@ -114,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                       'admin_employee_portal'.tr,
                       style: TextStyle(
                         fontSize: 16,
-                        color: AppColors.tertiary.withOpacity(0.8),
+                        color: AppColors.tertiary..withAlpha((0.8 * 255).round()),
                       ),
                     ),
                     const SizedBox(height: 32),

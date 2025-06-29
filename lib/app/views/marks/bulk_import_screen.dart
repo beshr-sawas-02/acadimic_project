@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
@@ -190,18 +192,32 @@ class BulkImportScreen extends StatelessWidget {
 
       if (result != null) {
         PlatformFile file = result.files.first;
-        final String fileContent = utf8.decode(file.bytes!);
+
+        // Read file content safely
+        String? fileContent;
+        if (file.bytes != null) {
+          // For platforms where bytes are available (e.g., mobile)
+          fileContent = utf8.decode(file.bytes!);
+        } else if (file.path != null) {
+          // For platforms where path is available (e.g., desktop)
+          fileContent = await File(file.path!).readAsString();
+        }
+
+        if (fileContent == null) {
+          throw Exception('Unable to read file content');
+        }
+
         final List<String> lines = LineSplitter.split(fileContent).toList();
 
         // Skip header row if it exists
-        final startIndex = lines[0].toLowerCase().contains('courseid') ? 1 : 0;
+        const startIndex = 1;
 
         for (int i = startIndex; i < lines.length; i++) {
           final List<String> values = lines[i].split(',');
 
           if (values.length >= 4) {
-            final courseId = values[0].trim();
-            final studentId = values[1].trim();
+            final studentId = values[0].trim();
+            final courseId = values[1].trim();
             final mark = double.tryParse(values[2].trim()) ?? 0.0;
             final type = values[3].trim();
 
@@ -224,11 +240,10 @@ class BulkImportScreen extends StatelessWidget {
     } catch (e) {
       DialogHelper.showErrorSnackbar(
         title: 'error'.tr,
-        message: 'failed_to_upload_file'.trParams({'%s': e.toString()}),
+        message: e.toString(),
       );
     }
   }
-
   Color _getMarkColor(double mark) {
     if (mark >= 90) return Colors.green;
     if (mark >= 80) return Colors.blue;

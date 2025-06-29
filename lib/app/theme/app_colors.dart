@@ -23,4 +23,5 @@ class AppColors {
   static const Color divider = Color(0xFFBDBDBD);
   static const Color disabled = Color(0xFFE0E0E0);
   static const Color cardBg = Color(0xFFFAFAFA);
+  static const Color grey = Colors.grey;
 }

@@ -102,7 +102,8 @@ class VoteController extends GetxController {
           startDate.value,
           endDate.value,
         );
-        DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
+        // إشعارات النجاح معطلة هنا
+        // DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
       }
     } catch (e) {
       DialogHelper.showErrorSnackbar(
@@ -127,7 +128,8 @@ class VoteController extends GetxController {
       isLoading.value = true;
       for (var courseId in selectedCourseIds) {
         final result = await _voteRepository.closeVoting(courseId);
-        DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
+        // إشعارات النجاح معطلة هنا
+        // DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
       }
     } catch (e) {
       DialogHelper.showErrorSnackbar(

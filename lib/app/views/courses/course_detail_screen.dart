@@ -72,7 +72,7 @@ class CourseDetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'course_code: ${course.courseCode}'.tr,
+                              'course_code'.trArgs([course.courseCode]),
                               style: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.tertiary,

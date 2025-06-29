@@ -1,5 +1,5 @@
 class ApiConstants {
-  static const String baseUrl = 'https://student-vote-backend.vercel.app';
+  static const String baseUrl = 'https://acadimicproj.vercel.app/';
   //static const String baseUrl = 'http://192.168.201.167:3000';
 
   // Auth endpoints
@@ -22,6 +22,7 @@ class ApiConstants {
   static const String marks = '/mark';
   static const String bulkImportMarks = '/mark/bulk-import';
   static const String getAllMarks = '/mark/get-all-marks';
+  static const String getMarksByCourse = '/mark/by-course';
 
   // Student endpoints
   static const String students = '/student';

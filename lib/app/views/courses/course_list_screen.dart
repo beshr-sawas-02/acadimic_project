@@ -37,7 +37,7 @@ class CourseListScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                // ✅ Year filter (with scrollable Row to prevent overflow)
+                // 🔹 فلتر السنة (للائحة المعروضة فقط)
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -106,7 +106,7 @@ class CourseListScreen extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                // Admin actions (open courses by year)
+                // 🔹 خاص بالمشرف: اختيار سنة منفصلة لفتح المقررات (غير مرتبطة بالفلترة)
                 if (isAdmin)
                   Container(
                     padding: const EdgeInsets.all(16),
@@ -132,7 +132,7 @@ class CourseListScreen extends StatelessWidget {
                           children: [
                             Obx(() {
                               return DropdownButton<int>(
-                                value: controller.year.value.value,
+                                value: controller.openYear.value.value,
                                 items: List.generate(5, (index) {
                                   final year = index + 1;
                                   return DropdownMenuItem<int>(
@@ -142,13 +142,11 @@ class CourseListScreen extends StatelessWidget {
                                 }),
                                 onChanged: (value) {
                                   if (value != null) {
-                                    final selectedYear = YearEnum.values
-                                        .firstWhere(
+                                    final selectedYear = YearEnum.values.firstWhere(
                                           (e) => e.value == value,
                                       orElse: () => YearEnum.FIRST,
                                     );
-                                    controller.filterYear.value = selectedYear;
-                                    controller.year.value = selectedYear;
+                                    controller.openYear.value = selectedYear;
                                   }
                                 },
                               );
@@ -156,8 +154,7 @@ class CourseListScreen extends StatelessWidget {
                             const SizedBox(width: 16),
                             CustomButton(
                               text: 'open_courses'.tr,
-                              onPressed: () =>
-                                  controller.openCourseOfYear(controller.year.value),
+                              onPressed: () => controller.openCourseOfYear(controller.openYear.value),
                               backgroundColor: AppColors.secondary,
                               icon: Icons.lock_open,
                             ),
@@ -315,26 +312,9 @@ class CourseListScreen extends StatelessWidget {
                                     color: AppColors.textSecondary,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.category,
-                                  size: 16,
-                                  color: AppColors.textSecondary,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '${'type'.tr}: ${course.type}',
-                                  style: TextStyle(
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
                                 const SizedBox(width: 16),
                                 Icon(
-                                  Icons.calendar_today,
+                                  Icons.book,
                                   size: 16,
                                   color: AppColors.textSecondary,
                                 ),
@@ -347,29 +327,6 @@ class CourseListScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            if (isAdmin) ...[
-                              const Divider(height: 24),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    color: AppColors.secondary,
-                                    tooltip: 'edit'.tr,
-                                    onPressed: () {
-                                      controller.setSelectedCourse(course);
-                                      Get.toNamed(Routes.ADD_EDIT_COURSE);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    color: AppColors.error,
-                                    tooltip: 'delete'.tr,
-                                    onPressed: () => controller.deleteCourse(course.id),
-                                  ),
-                                ],
-                              ),
-                            ],
                           ],
                         ),
                       ),
@@ -381,17 +338,6 @@ class CourseListScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: isAdmin
-          ? FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add),
-        tooltip: 'add_course'.tr,
-        onPressed: () {
-          controller.resetForm();
-          Get.toNamed(Routes.ADD_EDIT_COURSE);
-        },
-      )
-          : null,
     );
   }
 }

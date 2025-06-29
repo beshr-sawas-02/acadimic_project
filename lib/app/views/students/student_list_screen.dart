@@ -232,7 +232,7 @@ class StudentListScreen extends StatelessWidget {
                                     ),
                                   ),
                                   child: Text(
-                                    '${'year_label'.tr} ${student.year.value}',
+                                    '${'year_label'.tr} ${student.year.value >=5 ? 5 : student.year.value}',
                                     style: TextStyle(
                                       color: AppColors.secondary,
                                       fontWeight: FontWeight.bold,

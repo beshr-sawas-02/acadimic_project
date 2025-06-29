@@ -30,14 +30,9 @@ class MarkRepository {
   // Get all marks
   Future<List<Mark>> getAllMarks() async {
     try {
+      final response = await _apiProvider.get(ApiConstants.getAllMarks);
 
-      final response = await _apiProvider.get(
-        ApiConstants.getAllMarks,
-      );
-print(response.data);
-      return (response.data as List)
-          .map((mark) => Mark.fromMap(mark))
-          .toList();
+      return (response.data as List).map((mark) => Mark.fromMap(mark)).toList();
     } on DioException catch (e) {
       if (e.response != null) {
         throw e.response!.data['message'] ?? 'Failed to get marks';
@@ -73,10 +68,7 @@ print(response.data);
     try {
       final response = await _apiProvider.patch(
         '${ApiConstants.marks}/update/$id',
-        data: {
-          'id': id,
-          'updateDto': request.toMap(),
-        },
+        data: {'id': id, 'updateDto': request.toMap()},
       );
 
       return Mark.fromMap(response.data);

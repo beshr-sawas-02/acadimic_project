@@ -174,7 +174,7 @@ class VoteDetailScreen extends StatelessWidget {
                               ),
                               title: Text(voter.name),
                               subtitle: Text(
-                                'university_id'.tr + "${voter.universityId.toString()}",
+                                'university_id'.tr +" ${voter.universityId.toString()}",
                               ),
                               trailing: voter.isGraduating
                                   ? Chip(
