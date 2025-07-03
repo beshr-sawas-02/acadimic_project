@@ -4,11 +4,11 @@ class Validators {
   // Email validation
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email is required';
+      return 'email_required'.tr;
     }
 
     if (!GetUtils.isEmail(value)) {
-      return 'Please enter a valid email';
+      return 'email_invalid'.tr;
     }
 
     return null;
@@ -17,11 +17,11 @@ class Validators {
   // Password validation
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return 'password_required'.tr;
     }
 
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return 'password_min_length'.tr;
     }
 
     return null;
@@ -30,7 +30,7 @@ class Validators {
   // Required field validation
   static String? validateRequired(String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName is required';
+      return 'field_required'.trParams({'field': fieldName});
     }
 
     return null;
@@ -39,11 +39,11 @@ class Validators {
   // Number validation
   static String? validateNumber(String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName is required';
+      return 'number_required'.trParams({'field': fieldName});
     }
 
     if (!GetUtils.isNum(value)) {
-      return 'Please enter a valid number';
+      return 'number_invalid'.tr;
     }
 
     return null;
@@ -52,20 +52,20 @@ class Validators {
   // Mark validation
   static String? validateMark(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Mark is required';
+      return 'mark_required'.tr;
     }
 
     if (!GetUtils.isNum(value)) {
-      return 'Mark must be a number';
+      return 'mark_invalid_number'.tr;
     }
 
     final mark = double.tryParse(value);
     if (mark == null) {
-      return 'Invalid mark';
+      return 'mark_invalid'.tr;
     }
 
     if (mark < 0 || mark > 100) {
-      return 'Mark must be between 0 and 100';
+      return 'mark_range'.tr;
     }
 
     return null;
@@ -74,11 +74,11 @@ class Validators {
   // Date validation
   static String? validateDate(String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName is required';
+      return 'date_required'.trParams({'field': fieldName});
     }
 
     if (!GetUtils.isDateTime(value)) {
-      return 'Please enter a valid date';
+      return 'date_invalid'.tr;
     }
 
     return null;
@@ -87,11 +87,11 @@ class Validators {
   // University ID validation
   static String? validateUniversityId(String? value) {
     if (value == null || value.isEmpty) {
-      return 'University ID is required';
+      return 'university_id_required'.tr;
     }
 
     if (!GetUtils.isNumericOnly(value)) {
-      return 'University ID must be a number';
+      return 'university_id_invalid'.tr;
     }
 
     return null;
@@ -100,11 +100,11 @@ class Validators {
   // Confirm password validation
   static String? validateConfirmPassword(String? value, String password) {
     if (value == null || value.isEmpty) {
-      return 'Confirm password is required';
+      return 'confirm_password_required'.tr;
     }
 
     if (value != password) {
-      return 'Passwords do not match';
+      return 'passwords_not_match'.tr;
     }
 
     return null;
@@ -113,11 +113,11 @@ class Validators {
   // Course code validation
   static String? validateCourseCode(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Course code is required';
+      return 'course_code_required'.tr;
     }
 
     if (value.length < 4) {
-      return 'Course code must be at least 4 characters';
+      return 'course_code_min_length'.tr;
     }
 
     return null;
@@ -126,11 +126,11 @@ class Validators {
   // Name validation
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Name is required';
+      return 'name_required'.tr;
     }
 
     if (value.length < 3) {
-      return 'Name must be at least 3 characters';
+      return 'name_min_length'.tr;
     }
 
     return null;

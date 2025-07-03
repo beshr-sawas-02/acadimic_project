@@ -5,7 +5,7 @@ import '../theme/app_colors.dart';
 class DialogHelper {
   // Show error dialog
   static void showErrorDialog({
-    String title = 'Error',
+    String title = 'error',
     String? message,
   }) {
     Get.dialog(
@@ -19,7 +19,7 @@ class DialogHelper {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                title,
+                title.tr,
                 style: Get.textTheme.headlineSmall?.copyWith(
                   color: AppColors.error,
                   fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class DialogHelper {
               ),
               const SizedBox(height: 16),
               Text(
-                message ?? 'Something went wrong',
+                (message ?? 'something_wrong').tr,
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -37,7 +37,7 @@ class DialogHelper {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
                 ),
-                child: const Text('OK'),
+                child: Text('ok'.tr),
               ),
             ],
           ),
@@ -48,7 +48,7 @@ class DialogHelper {
 
   // Show success dialog
   static void showSuccessDialog({
-    String title = 'Success',
+    String title = 'success',
     String? message,
     VoidCallback? onConfirm,
   }) {
@@ -63,7 +63,7 @@ class DialogHelper {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                title,
+                title.tr,
                 style: Get.textTheme.headlineSmall?.copyWith(
                   color: AppColors.success,
                   fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class DialogHelper {
               ),
               const SizedBox(height: 16),
               Text(
-                message ?? 'Operation completed successfully',
+                (message ?? 'operation_completed').tr,
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -84,7 +84,7 @@ class DialogHelper {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.success,
                 ),
-                child: const Text('OK'),
+                child: Text('ok'.tr),
               ),
             ],
           ),
@@ -95,10 +95,10 @@ class DialogHelper {
 
   // Show confirm dialog
   static void showConfirmDialog({
-    String title = 'Confirm',
+    String title = 'confirm',
     String? message,
-    String confirmText = 'Confirm',
-    String cancelText = 'Cancel',
+    String confirmText = 'confirm',
+    String cancelText = 'cancel',
     VoidCallback? onConfirm,
     VoidCallback? onCancel,
   }) {
@@ -113,7 +113,7 @@ class DialogHelper {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                title,
+                title.tr,
                 style: Get.textTheme.headlineSmall?.copyWith(
                   color: AppColors.secondary,
                   fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class DialogHelper {
               ),
               const SizedBox(height: 16),
               Text(
-                message ?? 'Are you sure you want to continue?',
+                (message ?? 'confirm_continue').tr,
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -134,14 +134,14 @@ class DialogHelper {
                       Get.back();
                       if (onCancel != null) onCancel();
                     },
-                    child: Text(cancelText),
+                    child: Text(cancelText.tr),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Get.back();
                       if (onConfirm != null) onConfirm();
                     },
-                    child: Text(confirmText),
+                    child: Text(confirmText.tr),
                   ),
                 ],
               ),
@@ -153,7 +153,7 @@ class DialogHelper {
   }
 
   // Show loading dialog
-  static void showLoading({String message = 'Loading...'}) {
+  static void showLoading({String message = 'loading'}) {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
@@ -167,7 +167,7 @@ class DialogHelper {
               const CircularProgressIndicator(),
               const SizedBox(height: 16),
               Text(
-                message,
+                message.tr,
                 style: Get.textTheme.bodyLarge,
               ),
             ],
@@ -194,8 +194,8 @@ class DialogHelper {
     Duration duration = const Duration(seconds: 3),
   }) {
     Get.snackbar(
-      title,
-      message,
+      title.tr,
+      message.tr,
       snackPosition: position,
       backgroundColor: backgroundColor,
       colorText: AppColors.textLight,
@@ -209,8 +209,8 @@ class DialogHelper {
 
   // Show error snackbar
   static void showErrorSnackbar({
-    String title = 'Error',
-    String message = 'Something went wrong',
+    String title = 'error',
+    String message = 'something_wrong',
   }) {
     showSnackbar(
       title: title,
@@ -221,8 +221,8 @@ class DialogHelper {
 
   // Show success snackbar
   static void showSuccessSnackbar({
-    String title = 'Success',
-    String message = 'Operation completed successfully',
+    String title = 'success',
+    String message = 'operation_completed',
   }) {
     showSnackbar(
       title: title,
@@ -233,7 +233,7 @@ class DialogHelper {
 
   // Show info snackbar
   static void showInfoSnackbar({
-    String title = 'Info',
+    String title = 'info',
     String message = '',
   }) {
     showSnackbar(
@@ -245,7 +245,7 @@ class DialogHelper {
 
   // Show warning snackbar
   static void showWarningSnackbar({
-    String title = 'Warning',
+    String title = 'warning',
     String message = '',
   }) {
     showSnackbar(

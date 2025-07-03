@@ -51,8 +51,8 @@ class MarkController extends GetxController {
       marks.assignAll(result);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to fetch marks: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'fetch_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
@@ -72,8 +72,8 @@ class MarkController extends GetxController {
       status.value = result.status;
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to get mark: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'get_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
@@ -83,8 +83,8 @@ class MarkController extends GetxController {
   Future<void> updateMark() async {
     if (selectedMark.value == null) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'No mark selected',
+        title: 'error'.tr,
+        message: 'no_mark_selected'.tr,
       );
       return;
     }
@@ -104,16 +104,16 @@ class MarkController extends GetxController {
       await _markRepository.updateMark(selectedMark.value!.id, updateRequest);
 
       DialogHelper.showSuccessSnackbar(
-        title: 'Success',
-        message: AppConstants.updateSuccess,
+        title: 'success'.tr,
+        message: 'update_success'.tr,
       );
 
       fetchAllMarks();
       Get.back();
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to update mark: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'update_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
@@ -122,18 +122,18 @@ class MarkController extends GetxController {
 
   Future<void> deleteMark(String id) async {
     DialogHelper.showConfirmDialog(
-      title: 'Delete Mark',
-      message: 'Are you sure you want to delete this mark?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
+      title: 'delete_mark'.tr,
+      message: 'delete_confirmation'.tr,
+      confirmText: 'delete'.tr,
+      cancelText: 'cancel'.tr,
       onConfirm: () async {
         try {
           isLoading.value = true;
           await _markRepository.deleteMark(id);
 
           DialogHelper.showSuccessSnackbar(
-            title: 'Success',
-            message: AppConstants.deleteSuccess,
+            title: 'success'.tr,
+            message: 'delete_success'.tr,
           );
 
           fetchAllMarks();
@@ -144,8 +144,8 @@ class MarkController extends GetxController {
           }
         } catch (e) {
           DialogHelper.showErrorSnackbar(
-            title: 'Error',
-            message: 'Failed to delete mark: ${e.toString()}',
+            title: 'error'.tr,
+            message: '${'delete_failed'.tr}: ${e.toString()}',
           );
         } finally {
           isLoading.value = false;
@@ -174,8 +174,8 @@ class MarkController extends GetxController {
 
     if (courseId.value.isEmpty || studentId.value.isEmpty || parsedMark <= 0 || type.value.isEmpty) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Please fill all required fields',
+        title: 'error'.tr,
+        message: 'fill_required_fields'.tr,
       );
       return;
     }
@@ -197,8 +197,8 @@ class MarkController extends GetxController {
     typeController.clear();
 
     DialogHelper.showSuccessSnackbar(
-      title: 'Success',
-      message: 'Mark added to bulk import list',
+      title: 'success'.tr,
+      message: 'mark_added_bulk'.tr,
     );
 
     Get.back();
@@ -211,8 +211,8 @@ class MarkController extends GetxController {
   Future<void> submitBulkImport() async {
     if (bulkMarks.isEmpty) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'No marks to import',
+        title: 'error'.tr,
+        message: 'no_marks_to_import'.tr,
       );
       return;
     }
@@ -222,8 +222,8 @@ class MarkController extends GetxController {
       await _markRepository.bulkImportMarks(bulkMarks);
 
       DialogHelper.showSuccessSnackbar(
-        title: 'Success',
-        message: 'Marks imported successfully',
+        title: 'success'.tr,
+        message: 'import_success'.tr,
       );
 
       bulkMarks.clear();
@@ -231,8 +231,8 @@ class MarkController extends GetxController {
       Get.toNamed(Routes.MARKS);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to import marks: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'failed_import'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;

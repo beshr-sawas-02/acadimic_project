@@ -11,7 +11,7 @@ class NetworkErrorHandler {
       _handleDioError(error);
     } else {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
+        title: 'error'.tr,
         message: error.toString(),
       );
     }
@@ -21,22 +21,22 @@ class NetworkErrorHandler {
     switch (error.type) {
       case dio.DioExceptionType.connectionTimeout:
         DialogHelper.showErrorSnackbar(
-          title: 'Connection Timeout',
-          message: 'The connection timed out. Please try again.',
+          title: 'connection_timeout'.tr,
+          message: 'connection_timeout_msg'.tr,
         );
         break;
 
       case dio.DioExceptionType.sendTimeout:
         DialogHelper.showErrorSnackbar(
-          title: 'Send Timeout',
-          message: 'The request timed out while sending data. Please try again.',
+          title: 'send_timeout'.tr,
+          message: 'send_timeout_msg'.tr,
         );
         break;
 
       case dio.DioExceptionType.receiveTimeout:
         DialogHelper.showErrorSnackbar(
-          title: 'Receive Timeout',
-          message: 'The server took too long to respond. Please try again.',
+          title: 'receive_timeout'.tr,
+          message: 'receive_timeout_msg'.tr,
         );
         break;
 
@@ -46,22 +46,22 @@ class NetworkErrorHandler {
 
       case dio.DioExceptionType.cancel:
         DialogHelper.showErrorSnackbar(
-          title: 'Request Cancelled',
-          message: 'The request was cancelled.',
+          title: 'request_cancelled'.tr,
+          message: 'request_cancelled_msg'.tr,
         );
         break;
 
       case dio.DioExceptionType.connectionError:
         DialogHelper.showErrorSnackbar(
-          title: 'Connection Error',
-          message: 'Please check your internet connection and try again.',
+          title: 'connection_error'.tr,
+          message: 'connection_error_msg'.tr,
         );
         break;
 
       default:
         DialogHelper.showErrorSnackbar(
-          title: 'Network Error',
-          message: AppConstants.networkError,
+          title: 'network_error'.tr,
+          message: AppConstants.networkError, // هذا ثابت، يمكنك ترجمته في مكان آخر
         );
     }
   }
@@ -70,57 +70,57 @@ class NetworkErrorHandler {
     switch (response.statusCode) {
       case 400:
         DialogHelper.showErrorSnackbar(
-          title: 'Bad Request',
+          title: 'bad_request'.tr,
           message: _getErrorMessage(response),
         );
         break;
 
       case 401:
         DialogHelper.showErrorSnackbar(
-          title: 'Unauthorized',
-          message: 'Your session has expired. Please login again.',
+          title: 'unauthorized'.tr,
+          message: 'unauthorized_msg'.tr,
         );
         _clearTokenAndRedirectToLogin();
         break;
 
       case 403:
         DialogHelper.showErrorSnackbar(
-          title: 'Forbidden',
-          message: 'You do not have permission to perform this action.',
+          title: 'forbidden'.tr,
+          message: 'forbidden_msg'.tr,
         );
         break;
 
       case 404:
         DialogHelper.showErrorSnackbar(
-          title: 'Not Found',
-          message: 'The requested resource was not found.',
+          title: 'not_found'.tr,
+          message: 'not_found_msg'.tr,
         );
         break;
 
       case 409:
         DialogHelper.showErrorSnackbar(
-          title: 'Conflict',
+          title: 'conflict'.tr,
           message: _getErrorMessage(response),
         );
         break;
 
       case 422:
         DialogHelper.showErrorSnackbar(
-          title: 'Validation Error',
+          title: 'validation_error'.tr,
           message: _getErrorMessage(response),
         );
         break;
 
       case 500:
         DialogHelper.showErrorSnackbar(
-          title: 'Server Error',
-          message: AppConstants.serverError,
+          title: 'server_error'.tr,
+          message: 'server_error_msg'.tr,
         );
         break;
 
       default:
         DialogHelper.showErrorSnackbar(
-          title: 'Error',
+          title: 'error'.tr,
           message: _getErrorMessage(response),
         );
     }
@@ -133,10 +133,10 @@ class NetworkErrorHandler {
       } else if (response.data is String) {
         return response.data;
       } else {
-        return 'An error occurred. Please try again.';
+        return 'generic_error_msg'.tr;
       }
     } catch (e) {
-      return 'An error occurred. Please try again.';
+      return 'generic_error_msg'.tr;
     }
   }
 

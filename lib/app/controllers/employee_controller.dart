@@ -12,14 +12,12 @@ class EmployeeController extends GetxController {
   final RxList<Employee> employees = <Employee>[].obs;
   final Rx<Employee?> selectedEmployee = Rx<Employee?>(null);
 
-  // Form values as RxString
   final RxString name = ''.obs;
   final RxString email = ''.obs;
   final RxString dob = ''.obs;
   final RxString password = ''.obs;
   final RxString confirmPassword = ''.obs;
 
-  // TextEditingControllers (ثابتة، لا تُنشأ جديدة في كل بناء)
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
@@ -30,14 +28,12 @@ class EmployeeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // مزامنة قيم Rx مع النصوص في الـ Controllers
     nameController.text = name.value;
     emailController.text = email.value;
     dobController.text = dob.value;
     passwordController.text = password.value;
     confirmPasswordController.text = confirmPassword.value;
 
-    // تحديث Rx عند تغيير النصوص
     nameController.addListener(() => name.value = nameController.text);
     emailController.addListener(() => email.value = emailController.text);
     dobController.addListener(() => dob.value = dobController.text);
@@ -47,7 +43,6 @@ class EmployeeController extends GetxController {
     fetchAllEmployees();
   }
 
-  // Fetch all employees
   Future<void> fetchAllEmployees() async {
     try {
       isLoading.value = true;
@@ -55,22 +50,20 @@ class EmployeeController extends GetxController {
       employees.assignAll(result);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to fetch employees: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'fetch_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Get employee by ID
   Future<void> getEmployeeById(String id) async {
     try {
       isLoading.value = true;
       final result = await _employeeRepository.getEmployeeById(id);
       selectedEmployee.value = result;
 
-      // تحديث قيم الفورم و TextEditingControllers
       name.value = result.name;
       email.value = result.email;
       dob.value = result.dob;
@@ -84,28 +77,27 @@ class EmployeeController extends GetxController {
       confirmPasswordController.text = confirmPassword.value;
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to get employee: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'get_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Create employee
   Future<void> createEmployee() async {
     if (name.value.isEmpty || email.value.isEmpty || dob.value.isEmpty || password.value.isEmpty) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Please fill all required fields',
+        title: 'error'.tr,
+        message: 'fill_required_fields'.tr,
       );
       return;
     }
 
     if (password.value != confirmPassword.value) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Passwords do not match',
+        title: 'error'.tr,
+        message: 'passwords_not_match'.tr,
       );
       return;
     }
@@ -123,39 +115,36 @@ class EmployeeController extends GetxController {
       await _employeeRepository.createEmployee(createRequest);
 
       DialogHelper.showSuccessSnackbar(
-        title: 'Success',
-        message: AppConstants.createSuccess,
+        title: 'success'.tr,
+        message: 'create_success'.tr,
       );
 
       resetForm();
-
       fetchAllEmployees();
-
       Get.back();
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to create employee: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'create_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Update employee
   Future<void> updateEmployee() async {
     if (selectedEmployee.value == null) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'No employee selected',
+        title: 'error'.tr,
+        message: 'no_employee_selected'.tr,
       );
       return;
     }
 
     if (password.value.isNotEmpty && password.value != confirmPassword.value) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Passwords do not match',
+        title: 'error'.tr,
+        message: 'passwords_not_match'.tr,
       );
       return;
     }
@@ -173,38 +162,36 @@ class EmployeeController extends GetxController {
       await _employeeRepository.updateEmployee(selectedEmployee.value!.id, updateRequest);
 
       DialogHelper.showSuccessSnackbar(
-        title: 'Success',
-        message: AppConstants.updateSuccess,
+        title: 'success'.tr,
+        message: 'update_success'.tr,
       );
 
       fetchAllEmployees();
-
       Get.back();
     } catch (e) {
       DialogHelper.showErrorSnackbar(
-        title: 'Error',
-        message: 'Failed to update employee: ${e.toString()}',
+        title: 'error'.tr,
+        message: '${'update_failed'.tr}: ${e.toString()}',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Delete employee
   Future<void> deleteEmployee(String id) async {
     DialogHelper.showConfirmDialog(
-      title: 'Delete Employee',
-      message: 'Are you sure you want to delete this employee?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
+      title: 'delete_employee'.tr,
+      message: 'delete_confirmation'.tr,
+      confirmText: 'delete'.tr,
+      cancelText: 'cancel'.tr,
       onConfirm: () async {
         try {
           isLoading.value = true;
           await _employeeRepository.deleteEmployee(id);
 
           DialogHelper.showSuccessSnackbar(
-            title: 'Success',
-            message: AppConstants.deleteSuccess,
+            title: 'success'.tr,
+            message: 'delete_success'.tr,
           );
 
           fetchAllEmployees();
@@ -215,8 +202,8 @@ class EmployeeController extends GetxController {
           }
         } catch (e) {
           DialogHelper.showErrorSnackbar(
-            title: 'Error',
-            message: 'Failed to delete employee: ${e.toString()}',
+            title: 'error'.tr,
+            message: '${'delete_failed'.tr}: ${e.toString()}',
           );
         } finally {
           isLoading.value = false;
@@ -225,7 +212,6 @@ class EmployeeController extends GetxController {
     );
   }
 
-  // Reset form
   void resetForm() {
     name.value = '';
     email.value = '';
@@ -240,7 +226,6 @@ class EmployeeController extends GetxController {
     confirmPasswordController.clear();
   }
 
-  // Set selected employee for editing
   void setSelectedEmployee(Employee employee) {
     selectedEmployee.value = employee;
 
