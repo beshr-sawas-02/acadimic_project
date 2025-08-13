@@ -17,6 +17,14 @@ class VoteListScreen extends StatelessWidget {
         title: Text('course_voting'.tr),
         actions: [
           IconButton(
+            icon: const Icon(Icons.sort),
+            tooltip: 'sort_votes'.tr,
+            onPressed: () {
+              // تبديل حالة الفرز بين الأعلى أولاً والأدنى أولاً
+              controller.isSortByHighest.value = !controller.isSortByHighest.value;
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () => Get.toNamed(Routes.VOTING_MANAGEMENT),
             tooltip: 'voting_management'.tr,
@@ -66,11 +74,13 @@ class VoteListScreen extends StatelessWidget {
           );
         }
 
+        final sortedVotes = controller.getSortedVotes();
+
         return ListView.builder(
           padding: const EdgeInsets.all(16),
-          itemCount: controller.votes.length,
+          itemCount: sortedVotes.length,
           itemBuilder: (context, index) {
-            final courseVote = controller.votes[index];
+            final courseVote = sortedVotes[index];
 
             return Directionality(
               textDirection: TextDirection.rtl,

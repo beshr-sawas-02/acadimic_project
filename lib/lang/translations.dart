@@ -192,7 +192,7 @@ class AppTranslations extends Translations {
       'instructions': 'Instructions',
       'import_instructions_1': 'You can import marks in two ways:',
       'import_instructions_2':
-          '1. Upload a CSV file with the following columns: courseId, studentId, mark, type',
+          '1. Upload a CSV file with the following columns: courseCode, universityId, mark, type',
       'import_instructions_3':
           '2. Add marks manually using the form below, then click "Import All"',
       'upload_csv_file': 'Upload CSV File',
@@ -338,6 +338,13 @@ class AppTranslations extends Translations {
       'info': 'Info',
       'warning': 'Warning',
       'ok': 'OK',
+      'select_course':'Select course',
+      'search_student':'Search Student',
+      'search_course':'Search Course',
+      'search_courses':'Search Courses',
+      'select_all':'Select All',
+      'clear_all': 'Clear All',
+      'selected_courses': 'Selected Courses',
     },
     'ar': {
       'home': 'الرئيسية',
@@ -527,7 +534,7 @@ class AppTranslations extends Translations {
       'instructions': 'التعليمات',
       'import_instructions_1': 'يمكنك استيراد العلامات بطريقتين:',
       'import_instructions_2':
-          '1. رفع ملف CSV يحتوي على الأعمدة التالية: courseId, studentId, mark, type',
+          '1. رفع ملف CSV يحتوي على الأعمدة التالية: courseCode, universityId, mark, type',
       'import_instructions_3':
           '2. إضافة العلامات يدويًا باستخدام النموذج أدناه، ثم اضغط "استيراد الكل"',
       'upload_csv_file': 'رفع ملف CSV',
@@ -674,6 +681,13 @@ class AppTranslations extends Translations {
       'info': 'معلومات',
       'warning': 'تحذير',
       'ok': 'موافق',
+      'select_course':'اختيار المادة',
+      'search_student':'بحث عن طالب',
+      'search_course':'بحث عن مادة',
+      'search_courses':'بحث عن مقررات',
+      'select_all':'تحديد الكل',
+      'clear_all': 'إلغاء تحديد الكل',
+      'selected_courses': 'المقررات المحددة',
     },
   };
 }

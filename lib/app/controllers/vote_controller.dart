@@ -7,14 +7,17 @@ class VoteController extends GetxController {
   final VoteRepository _voteRepository = Get.find<VoteRepository>();
 
   final RxBool isLoading = false.obs;
-  final RxList<CourseVote> votes = <CourseVote>[].obs; // Changed to CourseVote
-  final Rx<CourseVote?> selectedVote = Rx<CourseVote?>(null); // Changed to CourseVote
+  final RxList<CourseVote> votes = <CourseVote>[].obs;
+  final Rx<CourseVote?> selectedVote = Rx<CourseVote?>(null);
 
   final RxList<String> selectedCourseIds = <String>[].obs;
   final Rx<DateTime> startDate = DateTime.now().obs;
   final Rx<DateTime> endDate = DateTime.now().add(const Duration(days: 14)).obs;
 
   final RxList<Vote> courseVotes = <Vote>[].obs;
+
+  // إضافة متغير للتحكم بطريقة الفرز: true للترتيب من الأعلى للأدنى، false للأدنى للأعلى
+  final RxBool isSortByHighest = true.obs;
 
   @override
   void onInit() {
@@ -37,12 +40,26 @@ class VoteController extends GetxController {
     }
   }
 
+  // دالة ترجع قائمة الأصوات مرتبة حسب اختيار المستخدم
+  List<CourseVote> getSortedVotes() {
+    List<CourseVote> sorted = List.from(votes);
+    sorted.sort((a, b) {
+      if (isSortByHighest.value) {
+        return b.voteCount.compareTo(a.voteCount);
+      } else {
+        return a.voteCount.compareTo(b.voteCount);
+      }
+    });
+    return sorted;
+  }
+
+  // باقي الدوال تبقى كما هي
+
   Future<void> getVoteById(String id) async {
     try {
       isLoading.value = true;
       final result = await _voteRepository.getVoteById(id);
-      // Note: getVoteById still returns a single Vote, not CourseVote
-      // You may need to adjust this based on your needs
+      // معالجة النتيجة حسب الحاجة
     } catch (e) {
       DialogHelper.showErrorSnackbar(
         title: 'error'.tr,
@@ -102,8 +119,6 @@ class VoteController extends GetxController {
           startDate.value,
           endDate.value,
         );
-        // إشعارات النجاح معطلة هنا
-        // DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
       }
     } catch (e) {
       DialogHelper.showErrorSnackbar(
@@ -128,8 +143,6 @@ class VoteController extends GetxController {
       isLoading.value = true;
       for (var courseId in selectedCourseIds) {
         final result = await _voteRepository.closeVoting(courseId);
-        // إشعارات النجاح معطلة هنا
-        // DialogHelper.showSuccessSnackbar(title: 'success'.tr, message: result);
       }
     } catch (e) {
       DialogHelper.showErrorSnackbar(

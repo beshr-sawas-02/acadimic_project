@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LanguageController extends GetxController {
-  final _locale = Locale('en').obs;
+  final _locale = Locale('ar').obs; // العربية افتراضي
   final GetStorage _storage = GetStorage();
 
   Locale get locale => _locale.value;
@@ -14,8 +14,11 @@ class LanguageController extends GetxController {
     String? langCode = _storage.read('language');
     if (langCode != null) {
       _locale.value = Locale(langCode);
-      Get.updateLocale(_locale.value);
+    } else {
+      _locale.value = Locale('ar'); // fallback عربية
+      _storage.write('language', 'ar');
     }
+    Get.updateLocale(_locale.value);
   }
 
   void toggleLanguage() {

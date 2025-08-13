@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import 'app/controllers/auth_controller.dart';
 import 'app/controllers/language_controller.dart';
 import 'app/controllers/theme_controller.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           title: 'University Management',
           translations: AppTranslations(),
           locale: languageController.locale,
-          fallbackLocale: const Locale('en'),
+          fallbackLocale: const Locale('ar'), // fallback عربية
           debugShowCheckedModeBanner: false,
           defaultTransition: Transition.fade,
           theme: AppTheme.lightTheme,

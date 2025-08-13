@@ -46,6 +46,7 @@ dependencies:
   excel: ^2.1.0
   flutter_datetime_picker_plus: ^2.1.0
   timeago: ^3.6.0
+  dropdown_search: ^5.0.3
 
 dev_dependencies:
   flutter_test:

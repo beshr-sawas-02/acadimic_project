@@ -99,6 +99,32 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // زر تغيير اللغة (أيقونة فقط)
+            Positioned(
+              top: 40,
+              right: 24,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondary.withOpacity(0.8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  elevation: 4,
+                  minimumSize: const Size(40, 40),
+                ),
+                child: const Icon(Icons.language, size: 20, color: Colors.white),
+                onPressed: () {
+                  if (Get.locale?.languageCode == 'en') {
+                    Get.updateLocale(const Locale('ar'));
+                  } else {
+                    Get.updateLocale(const Locale('en'));
+                  }
+                },
+              ),
+            ),
+
             if (controller.isLoading.value)
               Container(
                 color: Colors.black.withOpacity(0.5),

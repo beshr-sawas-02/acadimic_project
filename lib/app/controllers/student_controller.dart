@@ -71,7 +71,9 @@ class StudentController extends GetxController {
 
     try {
       isLoading.value = true;
-      final result = await _studentRepository.findStudentsByName(searchQuery.value);
+      final result = await _studentRepository.findStudentsByName(
+        searchQuery.value,
+      );
       students.assignAll(result);
     } catch (e) {
       DialogHelper.showErrorSnackbar(
@@ -125,7 +127,13 @@ class StudentController extends GetxController {
       return students;
     }
 
-    return students.where((student) => student.year == filterYear.value).toList();
+    return students.where((student) {
+      if (filterYear.value!.value == 5) {
+        return student.year.value >= 5;
+      } else {
+        return student.year == filterYear.value;
+      }
+    }).toList();
   }
 
   // Clear filters
@@ -156,7 +164,8 @@ class StudentController extends GetxController {
           fetchAllStudents();
 
           // Go back if viewing details
-          if (selectedStudent.value != null && selectedStudent.value!.id == id) {
+          if (selectedStudent.value != null &&
+              selectedStudent.value!.id == id) {
             selectedStudent.value = null;
             Get.offAllNamed(Routes.STUDENTS);
           }
