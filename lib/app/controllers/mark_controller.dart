@@ -4,7 +4,6 @@ import '../data/models/mark_model.dart';
 import '../data/repositories/mark_repository.dart';
 import '../data/enums/mark_status_enum.dart';
 import '../utils/dialog_helper.dart';
-import '../utils/constants.dart';
 import '../routes/app_pages.dart';
 
 class MarkController extends GetxController {

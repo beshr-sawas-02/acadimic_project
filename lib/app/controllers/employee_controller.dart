@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../data/models/employee_model.dart';
 import '../data/repositories/employee_repository.dart';
 import '../utils/dialog_helper.dart';
-import '../utils/constants.dart';
 
 class EmployeeController extends GetxController {
   final EmployeeRepository _employeeRepository = Get.find<EmployeeRepository>();

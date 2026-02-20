@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import '../../utils/constants.dart';
 import '../../utils/network_error_handler.dart';
 import 'storage_provider.dart';
